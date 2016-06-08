@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="3.4" type="plugin" group="system" method="full">
+	<name>plg_system_bpprettify</name>
+	<author>Artur Stępień</author>
+	<creationDate>30 May 2016</creationDate>
+	<copyright>(C) 2016 Best Project. All rights reserved.</copyright>
+	<license>GNU General Public License version 3 or later; see	LICENSE.txt</license>
+	<authorEmail>artur.stepien@bestproject.pl</authorEmail>
+	<authorUrl>www.bestproject.pl</authorUrl>
+	<version>1.0.0</version>
+	
+	<description>PLG_SYSTEM_BPPRETTIFY_XML_DESCRIPTION</description>
+	
+	<files>
+		<folder>language</folder>
+		<folder>themes</folder>
+		<filename plugin="bpprettify">bpprettify.php</filename>
+	</files>
+	
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_bpprettify.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_system_bpprettify.sys.ini</language>
+		<language tag="pl-PL">language/pl-PL/pl-PL.plg_system_bpprettify.ini</language>
+		<language tag="pl-PL">language/pl-PL/pl-PL.plg_system_bpprettify.sys.ini</language>
+	</languages>
+    
+    <updateservers>
+		<server type="extension" priority="5" name="BP Prettify">https://raw.githubusercontent.com/bestproject/plg_system_bpprettify/updates/server.xml</server>
+	</updateservers>
+    
+    <config>
+	<fields name="params">
+        
+		<fieldset name="basic">
+            
+			<field name="theme" type="filelist"
+				default="tomorrow.min.css" directory="plugins/system/bpprettify/themes" hide_default="true"
+				label="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_LABEL"
+				description="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_DESC" />
+            
+		</fieldset>
+        
+	</fields>
+	</config>
+	
+</extension>
