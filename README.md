@@ -5,4 +5,4 @@ A Joomla! 3 system plugin that use Google Prettify to highlight code in articles
 - No performance loss
 - Multiple themes available
 - No system crashes (code highlight takes place in the browser)
-- Update server
+- Automatic updates server
