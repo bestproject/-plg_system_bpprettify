@@ -37,11 +37,11 @@ class PlgSystemBPPrettify extends JPlugin
 		// Add prettify script
 		JHTML::_('jquery.framework');
 		$doc = JFactory::getDocument();
-		$doc->addScript('https://raw.githubusercontent.com/google/code-prettify/master/src/prettify.js',
+		$doc->addScript('https://cdn.rawgit.com/google/code-prettify/master/src/prettify.js',
 			null, true, true);
 		$doc->addScriptDeclaration('
-			jQuery(document).ready(function($){
-				var $list = $("code,pre,xmp");
+			jQuery(window).load(function(){
+				var $list = jQuery("code,pre,xmp");
 				if( $list.length ) {
 					$list.addClass("prettyprint");
 					prettyPrint();
