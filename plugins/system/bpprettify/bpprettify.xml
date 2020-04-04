@@ -24,37 +24,39 @@
 		<language tag="pl-PL">language/pl-PL/pl-PL.plg_system_bpprettify.sys.ini</language>
 	</languages>
     
-    <updateservers>
-		<server type="extension" priority="5" name="BP Prettify">https://free.updates.bpextensions.com/plg_system_bpprettify.xml</server>
-	</updateservers>
-    
     <config>
-	<fields name="params">
-        
-		<fieldset name="basic">
-            
-			<field name="theme" type="filelist"
-				default="hemisu-light.min.css" directory="plugins/system/bpprettify/themes" hide_default="true"
-				label="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_LABEL"
-				description="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_DESC" />
+		<fields name="params">
 
-			<field name="padding"  type="number" default="20" min="0" max="100" step="1"
-				   label="PLG_SYSTEM_BPPRETTIFY_FIELD_PADDING_LABEL"
-				   description="PLG_SYSTEM_BPPRETTIFY_FIELD_PADDING_DESC"
-				   filter="string" />
+			<fieldset name="basic">
 
-			<field name="border" type="radio"
-				   default="1" class="btn-group btn-group-yesno"
-				   label="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_LABEL"
-				   description="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_DESC"
-				   filter="INT">
-				<option value="1">JYES</option>
-				<option value="0">JNO</option>
-			</field>
-            
-		</fieldset>
-        
-	</fields>
+				<field name="theme" type="filelist"
+					   default="hemisu-light.min.css" directory="plugins/system/bpprettify/themes" hide_default="true"
+					   label="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_LABEL"
+					   description="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_DESC"/>
+
+				<field name="padding" type="number" default="20" min="0" max="100" step="1"
+					   label="PLG_SYSTEM_BPPRETTIFY_FIELD_PADDING_LABEL"
+					   description="PLG_SYSTEM_BPPRETTIFY_FIELD_PADDING_DESC"
+					   filter="string"/>
+
+				<field name="border" type="radio"
+					   default="1" class="btn-group btn-group-yesno"
+					   label="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_LABEL"
+					   description="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_DESC"
+					   filter="INT">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+			</fieldset>
+
+		</fields>
 	</config>
-	
+
+	<updateservers>
+		<server type="extension" priority="5" name="BP Prettify">
+			https://free.updates.bpextensions.com/plg_system_bpprettify.xml
+		</server>
+	</updateservers>
+
 </extension>
