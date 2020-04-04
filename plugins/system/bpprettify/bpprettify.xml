@@ -34,9 +34,23 @@
 		<fieldset name="basic">
             
 			<field name="theme" type="filelist"
-				default="tomorrow.min.css" directory="plugins/system/bpprettify/themes" hide_default="true"
+				default="hemisu-light.min.css" directory="plugins/system/bpprettify/themes" hide_default="true"
 				label="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_LABEL"
 				description="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_DESC" />
+
+			<field name="padding"  type="number" default="20" min="0" max="100" step="1"
+				   label="PLG_SYSTEM_BPPRETTIFY_FIELD_PADDING_LABEL"
+				   description="PLG_SYSTEM_BPPRETTIFY_FIELD_PADDING_DESC"
+				   filter="string" />
+
+			<field name="border" type="radio"
+				   default="1" class="btn-group btn-group-yesno"
+				   label="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_LABEL"
+				   description="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_DESC"
+				   filter="INT">
+				<option value="1">JYES</option>
+				<option value="0">JNO</option>
+			</field>
             
 		</fieldset>
         

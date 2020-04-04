@@ -7,6 +7,8 @@
  */
 
 use Joomla\CMS\Factory;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\HTML\HTMLHelper;
 
 defined('_JEXEC') or die;
 
@@ -15,7 +17,7 @@ defined('_JEXEC') or die;
  *
  * @since 1.0.2
  */
-class PlgSystemBPPrettify extends JPlugin
+class PlgSystemBPPrettify extends CMSPlugin
 {
 
     /**
@@ -29,35 +31,58 @@ class PlgSystemBPPrettify extends JPlugin
     public function onAfterDispatch()
     {
 
-        // Check that we are in the site application.
         $app = Factory::getApplication();
+        $doc = Factory::getDocument();
+        $input = $app->input;
+
+        // Check that we are in the site application.
         if ($app->isClient('administrator')) {
 
             return true;
         }
 
-        // Set the variables.
-        $input = $app->input;
-
         // Check if the highlighter should be activated in this environment.
-        $doc = Factory::getDocument();
         if ($doc->getType() !== 'html' || $input->get('tmpl', '',
                 'cmd') === 'component') {
             return true;
         }
 
         // Add prettify script
-        JHTML::_('jquery.framework');
+        HTMLHelper::_('jquery.framework');
         $doc->addScript('https://cdn.rawgit.com/google/code-prettify/master/src/prettify.js', ['version' => 'auto']);
         $doc->addScriptDeclaration('
-			jQuery(window).load(function(){
-				var $list = jQuery("code,pre,xmp");
+			jQuery(function($){
+			    var $list = jQuery("code,pre,xmp");
 				if( $list.length ) {
-					$list.addClass("prettyprint");
+				    $list.each(function(idx, el){
+                        if( $(el).parent("pre,code").length==0 ) {
+                            $(el).addClass("prettyprint");
+                        }				        
+				    });
 					prettyPrint();
 				}
 			});
 		');
+
+        // Settings CSS
+        $css = '';
+
+        // Add border
+        $padding = $this->params->get('padding', 20);
+        if( $padding ) {
+            $css.= "padding:{$padding}px;";
+        }
+
+        // Add border
+        $border = $this->params->get('border', 1);
+        if( $border ) {
+            $css.= "box-shadow: inset 0 0 1px rgba(0,0,0,.5);";
+        }
+
+        // Set settings CSS
+        if( !empty($css) ) {
+            $doc->addStyleDeclaration(".prettyprint { $css }");
+        }
 
         // Add theme
         $theme = $this->params->get('theme', 'tomorrow.min.css');
