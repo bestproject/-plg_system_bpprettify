@@ -32,7 +32,7 @@
         </copy>
 
         <echo msg="Creating plugin zipfile." />
-        <zip destfile="./.build/plg_system_bpprettify_${version}.zip" basedir="./.build/plg_system_bpprettify"/>
+        <zip destfile="./.build/plg_system_bpprettify_v${version}.zip" basedir="./.build/plg_system_bpprettify"/>
     </target>
 
     <target name="build">
