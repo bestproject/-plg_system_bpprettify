@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="BP Prettify" default="build:clean" basedir="." description="BP Prettify build task">
-    
-    <property file="./build.properties" />
-    
+
+    <property file="./build.properties"/>
+
     <php expression="date('F Y')" returnProperty="build.date"/>
     <php expression="date('Y')" returnProperty="build.year"/>
-    
+
+    <target name="test">
+        <echo msg="Test each extension before build"/>
+        <phingcall target="test:compatibility"/>
+        <phingcall target="test:plg_system_bpprettify"/>
+    </target>
+
+    <target name="test:compatibility">
+        <echo msg="Testing PHP 7.2 Compatibility"/>
+        <exec command="composer test:compatibility" checkreturn="true"/>
+    </target>
+
+    <target name="test:plg_system_bpprettify">
+        <echo msg="Testing plg_system_bpprettify"/>
+        <echo msg="No tests yet."/>
+    </target>
+
     <target name="build:plg_system_bpprettify">
-        <echo msg="Creating plugin directory" />
-        <mkdir dir="./.build/plg_system_bpprettify" />
-        
-        <echo msg="Building plugin installer" />
-        <copy todir="./.build/plg_system_bpprettify" >
+        <echo msg="Creating plugin directory"/>
+        <mkdir dir="./.build/plg_system_bpprettify"/>
+
+        <echo msg="Building plugin installer"/>
+        <copy todir="./.build/plg_system_bpprettify">
             <fileset dir="./plugins/system/bpprettify">
-                <include name="**/*" />
+                <include name="**/*"/>
             </fileset>
             <filterchain>
                 <replacetokens begintoken="${" endtoken="}">
@@ -22,7 +38,7 @@
                     <token key="copyrights" value="${copyrights}" />
                     <token key="license.name" value="${license.name}" />
                     <token key="license.url" value="${license.url}" />
-                    <token key="version" value="${version}" />
+                    <token key="version" value="${build.version}"/>
                     <token key="package" value="${package}" />
                     <token key="author.url" value="${author.url}" />
                     <token key="author.name" value="${author.name}" />
@@ -32,16 +48,18 @@
         </copy>
 
         <echo msg="Creating plugin zipfile." />
-        <zip destfile="./.build/plg_system_bpprettify_v${version}.zip" basedir="./.build/plg_system_bpprettify"/>
+        <zip destfile="./.build/plg_system_bpprettify_v${build.version}.zip" basedir="./.build/plg_system_bpprettify"/>
     </target>
 
     <target name="build">
-        <echo msg="Creating build directory ./.build" />
-        <mkdir dir="./.build" />
-        
-        <echo msg="Building each of the extensions" />
+        <phingcall target="test"/>
+
+        <echo msg="Creating build directory ./.build"/>
+        <mkdir dir="./.build"/>
+
+        <echo msg="Building each of the extensions"/>
         <phingcall target="build:plg_system_bpprettify"></phingcall>
-        
+
     </target>
 
     <target name="clean">

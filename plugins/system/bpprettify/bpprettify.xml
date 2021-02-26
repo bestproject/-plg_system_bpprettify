@@ -7,16 +7,16 @@
 	<license>${license.name}, see ${license.url}</license>
 	<authorEmail>${author.email}</authorEmail>
 	<authorUrl>${author.url}</authorUrl>
-	<version>${version}</version>
-	
+	<version>${build.version}</version>
+
 	<description>PLG_SYSTEM_BPPRETTIFY_XML_DESCRIPTION</description>
-	
+
 	<files>
 		<folder>language</folder>
 		<folder>themes</folder>
 		<filename plugin="bpprettify">bpprettify.php</filename>
 	</files>
-	
+
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.plg_system_bpprettify.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.plg_system_bpprettify.sys.ini</language>

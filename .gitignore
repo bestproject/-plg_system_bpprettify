@@ -1,6 +1,10 @@
 /*
 .idea
 !/plugins/
+!/.github/
+!/.github/**
+!/.phpcs/
+!/.phpcs/**
 /plugins/*
 !/plugins/system/
 /plugins/system/*
@@ -12,5 +16,6 @@
 !/build.xml
 !/composer.json
 !/composer.lock
-!/build.properties
+!/build.properties.dist
+./build.properties
 !/.gitignore
