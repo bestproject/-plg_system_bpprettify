@@ -17,5 +17,5 @@
 !/composer.json
 !/composer.lock
 !/build.properties.dist
-./build.properties
+build.properties
 !/.gitignore
