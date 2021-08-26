@@ -42,6 +42,12 @@ How to prepare your installation for development.
 
 ## Changelog
 
+### v.2.0.0
+
+- Rewritten for Joomla! 4
+- Self-hosted styles and script.
+- Assets build by Webpack Encore
+
 ### v.1.0.5
 
 - Re-licensing to mach JED requirements.

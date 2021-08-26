@@ -1,0 +1,48 @@
+{
+    "name": "plg_system_bppretify",
+    "version": "2.0.0",
+    "description": "Joomla! 4 front-end code highlight plugin.",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "encore dev --progress",
+        "watch": "encore dev --watch",
+        "watch-prod": "encore prod --watch",
+        "prod": "encore prod --progress",
+        "build": "encore prod --progress"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bpextensions/plg_system_bpprettify.git"
+    },
+    "author": "Artur Stepien",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/bpextensions/plg_system_bpprettify/issues"
+    },
+    "homepage": "https://github.com/bpextensions/plg_system_bpprettify#readme",
+    "devDependencies": {
+        "@babel/preset-env": "^7.12.11",
+        "@symfony/webpack-encore": "^1.1.2",
+        "autoprefixer": "^10.2.5",
+        "core-js": "^3.9.1",
+        "file-loader": "^6.2.0",
+        "node-sass": "^4.13.0",
+        "postcss-loader": "^5.2.0",
+        "sass-loader": "^9.0.1",
+        "serialize-javascript": "^3.1.0",
+        "webpack-notifier": "^1.13.0"
+    },
+    "dependencies": {
+        "caniuse-lite": "^1.0.30001181",
+        "code-prettify": "github:google/code-prettify",
+        "color-themes-for-google-code-prettify": "^2.0.4"
+    },
+    "engines": {
+        "node": ">=13.0"
+    },
+    "browserslist": [
+        "> 0.25%",
+        "not dead",
+        "IE 11"
+    ]
+}

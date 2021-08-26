@@ -23,6 +23,10 @@
     </target>
 
     <target name="build:plg_system_bpprettify">
+
+        <echo msg="Building theme assets"/>
+        <exec command="npm run prod" checkreturn="true"/>
+
         <echo msg="Creating plugin directory"/>
         <mkdir dir="./.build/plg_system_bpprettify"/>
 
@@ -58,7 +62,7 @@
         <mkdir dir="./.build"/>
 
         <echo msg="Building each of the extensions"/>
-        <phingcall target="build:plg_system_bpprettify"></phingcall>
+        <phingcall target="build:plg_system_bpprettify"/>
 
     </target>
 
@@ -66,11 +70,11 @@
         <echo msg="Removing build directory ./.build if exists" />
         <delete dir="./.build" includeemptydirs="true"/>
     </target>
-    
+
     <target name="build:clean">
-        <echo msg="Creating a clean build." />
-        <phingcall target="clean"></phingcall>
-        <phingcall target="build"></phingcall>
+        <echo msg="Creating a clean build."/>
+        <phingcall target="clean"/>
+        <phingcall target="build"/>
     </target>
 
 </project>

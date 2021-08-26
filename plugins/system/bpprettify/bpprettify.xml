@@ -11,26 +11,29 @@
 
 	<description>PLG_SYSTEM_BPPRETTIFY_XML_DESCRIPTION</description>
 
+	<namespace path="src">Joomla\Plugin\System\BPPrettify</namespace>
+
 	<files>
+		<folder>assets</folder>
 		<folder>language</folder>
-		<folder>themes</folder>
+		<folder>src</folder>
 		<filename plugin="bpprettify">bpprettify.php</filename>
 	</files>
 
-	<languages>
-		<language tag="en-GB">language/en-GB/en-GB.plg_system_bpprettify.ini</language>
-		<language tag="en-GB">language/en-GB/en-GB.plg_system_bpprettify.sys.ini</language>
-		<language tag="pl-PL">language/pl-PL/pl-PL.plg_system_bpprettify.ini</language>
-		<language tag="pl-PL">language/pl-PL/pl-PL.plg_system_bpprettify.sys.ini</language>
+	<languages folder="language">
+		<language tag="en-GB">en-GB/en-GB.plg_system_bpprettify.ini</language>
+		<language tag="en-GB">en-GB/en-GB.plg_system_bpprettify.sys.ini</language>
+		<language tag="pl-PL">pl-PL/pl-PL.plg_system_bpprettify.ini</language>
+		<language tag="pl-PL">pl-PL/pl-PL.plg_system_bpprettify.sys.ini</language>
 	</languages>
-    
-    <config>
+
+	<config>
 		<fields name="params">
 
 			<fieldset name="basic">
 
-				<field name="theme" type="filelist"
-					   default="hemisu-light.min.css" directory="plugins/system/bpprettify/themes" hide_default="true"
+				<field name="theme" type="prettifythemes" default="tomorrow"
+					   addfieldprefix="Joomla\Plugin\System\BPPrettify\Field"
 					   label="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_LABEL"
 					   description="PLG_SYSTEM_BPPRETTIFY_FIELD_THEME_DESC"/>
 
@@ -43,6 +46,15 @@
 					   default="1" class="btn-group btn-group-yesno"
 					   label="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_LABEL"
 					   description="PLG_SYSTEM_BPPRETTIFY_FIELD_BORDER_DESC"
+					   filter="INT">
+					<option value="1">JYES</option>
+					<option value="0">JNO</option>
+				</field>
+
+				<field name="linenumbers" type="radio"
+					   default="1" class="btn-group btn-group-yesno"
+					   label="PLG_SYSTEM_BPPRETTIFY_FIELD_LINENUMBERS_LABEL"
+					   description="PLG_SYSTEM_BPPRETTIFY_FIELD_LINENUMBERS_DESC"
 					   filter="INT">
 					<option value="1">JYES</option>
 					<option value="0">JNO</option>

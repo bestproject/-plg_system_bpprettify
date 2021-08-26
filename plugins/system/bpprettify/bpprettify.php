@@ -6,9 +6,10 @@
  * @license     ${license.name}; see ${license.url}
  */
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\HTML\HTMLHelper;
+use Joomla\CMS\Plugin\CMSPlugin;
+use Joomla\Plugin\System\BPPrettify\Helper\AssetsHelper;
 
 defined('_JEXEC') or die;
 
@@ -21,6 +22,14 @@ class PlgSystemBPPrettify extends CMSPlugin
 {
 
     /**
+     * Application object.
+     *
+     * @var    \Joomla\CMS\Application\CMSApplication
+     * @since  2.0.0
+     */
+    protected $app;
+
+    /**
      * Run this method after application dispatch.
      *
      * @return bool
@@ -31,12 +40,14 @@ class PlgSystemBPPrettify extends CMSPlugin
     public function onAfterDispatch()
     {
 
-        $app = Factory::getApplication();
-        $doc = Factory::getDocument();
-        $input = $app->input;
+        /**
+         * @var $doc HtmlDocument
+         */
+        $doc   = $this->app->getDocument();
+        $input = $this->app->input;
 
         // Check that we are in the site application.
-        if ($app->isClient('administrator')) {
+        if ($this->app->isClient('administrator')) {
 
             return true;
         }
@@ -47,47 +58,45 @@ class PlgSystemBPPrettify extends CMSPlugin
             return true;
         }
 
+        // Add border
+        $line_numbers = (bool)$this->params->get('linenumbers', 1);
+
         // Add prettify script
         HTMLHelper::_('jquery.framework');
-        $doc->addScript('https://cdn.rawgit.com/google/code-prettify/master/src/prettify.js', ['version' => 'auto']);
-        $doc->addScriptDeclaration('
-			jQuery(function($){
-			    var $list = jQuery("code,pre,xmp");
-				if( $list.length ) {
-				    $list.each(function(idx, el){
-                        if( $(el).parent("pre,code").length==0 ) {
-                            $(el).addClass("prettyprint");
-                        }				        
-				    });
-					prettyPrint();
-				}
-			});
-		');
+
+        $asset_manager = $doc->getWebAssetManager();
+        $asset_manager->registerAndUseScript('plg_system_bpprettify-theme', AssetsHelper::getPluginScriptUrl());
+        $asset_manager->addInlineScript("
+            jQuery(function(){
+                $(window).BPPrettify(" . ($line_numbers ? true : '') . ");
+            });
+        ");
 
         // Settings CSS
         $css = '';
 
         // Add border
         $padding = $this->params->get('padding', 20);
-        if( $padding ) {
-            $css.= "padding:{$padding}px;";
+        if ($padding) {
+            $css .= "padding:{$padding}px;";
         }
 
         // Add border
         $border = $this->params->get('border', 1);
-        if( $border ) {
-            $css.= "box-shadow: inset 0 0 1px rgba(0,0,0,.5);";
+        if ($border) {
+            $css .= "box-shadow: inset 0 0 1px rgba(0,0,0,.5);";
         }
 
         // Set settings CSS
-        if( !empty($css) ) {
-            $doc->addStyleDeclaration(".prettyprint { $css }");
+        if (!empty($css)) {
+            $asset_manager->addInlineStyle(".prettyprint { $css }");
         }
 
         // Add theme
-        $theme = $this->params->get('theme', 'tomorrow.min.css');
+        $theme     = $this->params->get('theme', 'tomorrow');
+        $style_url = AssetsHelper::getThemeStyleByName($theme);
         if ($theme !== '-1') {
-            $doc->addStyleSheet('/plugins/system/bpprettify/themes/' . $theme, ['version' => 'auto']);
+            $asset_manager->registerAndUseStyle('plg_system_bpprettify-theme', $style_url, ['version' => 'auto']);
         }
 
         return true;

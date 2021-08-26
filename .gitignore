@@ -10,6 +10,15 @@
 /plugins/system/*
 !/plugins/system/bpprettify/
 !/plugins/system/bpprettify/*
+!/plugins/system/bpprettify/assets
+/plugins/system/bpprettify/assets/*
+!/plugins/system/bpprettify/assets/build
+/plugins/system/bpprettify/assets/build/*
+!/plugins/system/bpprettify/assets/build/.gitkeep
+!/plugins/system/bpprettify/assets/themes
+/plugins/system/bpprettify/assets/themes/*
+!/plugins/system/bpprettify/assets/themes/.gitkeep
+!/.dev/
 
 !/LICENSE
 !/README.md
@@ -18,4 +27,8 @@
 !/composer.lock
 !/build.properties.dist
 build.properties
+!/package.json
+!/package-lock.json
+!/postcss.config.js
+!/webpack.config.js
 !/.gitignore
