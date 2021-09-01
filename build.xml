@@ -13,7 +13,7 @@
     </target>
 
     <target name="test:compatibility">
-        <echo msg="Testing PHP 7.2 Compatibility"/>
+        <echo msg="Testing PHP 7.2+ and 8.0+ Compatibility"/>
         <exec command="composer test:compatibility" checkreturn="true"/>
     </target>
 
