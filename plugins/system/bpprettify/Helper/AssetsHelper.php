@@ -1,11 +1,15 @@
 <?php
 
-namespace Joomla\Plugin\System\BPPrettify\Helper;
+namespace BPExtensions\Plugin\System\BPPrettify\Helper;
+
+use Joomla\CMS\WebAsset\WebAssetManager;
+use JUri;
+use RuntimeException;
 
 /**
- * BPPrettify plugin assets managemen helper.
+ * BPPrettify plugin assets management helper.
  *
- * @package     Joomla\Plugin\System\BPPrettify\Helper
+ * @package     BPExtensions\Plugin\System\BPPrettify\Helper
  *
  * @since       2.0.0
  */
@@ -25,7 +29,7 @@ class AssetsHelper
      * @var array[]
      * @since 2.0.0
      */
-    protected static $entrypoints = ['themes' => [], 'build' => []];
+    protected static $entrypoints = ['themes' => [], 'assets' => []];
 
     /**
      * Get list of themes entrypoints.
@@ -38,7 +42,7 @@ class AssetsHelper
     {
         $themes = [];
 
-        foreach (AssetsHelper::getEntrypoints('themes') as $name => $files) {
+        foreach (self::getEntrypoints('themes') as $name => $files) {
             if (!array_key_exists('css', $files)) {
                 continue;
             }
@@ -61,7 +65,13 @@ class AssetsHelper
     public static function getEntrypoints(string $config_name): array
     {
         if (self::$entrypoints[$config_name] === []) {
-            $path                            = self::getAssetsRootPath() . '/' . $config_name . '/entrypoints.json';
+            $path = self::getAssetsRootPath() . '/' . $config_name . '/entrypoints.json';
+
+            // Make sure manifest file exists
+            if (!file_exists($path)) {
+                throw new RuntimeException("Unable to find manifest file in: $path");
+            }
+
             $manifest                        = json_decode(file_get_contents($path), true, 512, JSON_OBJECT_AS_ARRAY);
             self::$entrypoints[$config_name] = $manifest['entrypoints'];
         }
@@ -79,10 +89,47 @@ class AssetsHelper
     public static function getAssetsRootPath(): string
     {
         if (self::$assets_root_path === '') {
-            self::$assets_root_path = dirname(__DIR__, 2) . '/assets';
+            self::$assets_root_path = JPATH_ROOT . '/media/plg_system_bpprettify';
         }
 
         return self::$assets_root_path;
+    }
+
+    /**
+     * Include entry point assets into the document.
+     *
+     * @param   WebAssetManager  $webAssetManager
+     * @param   string           $config_name
+     * @param   string           $entryPoint
+     *
+     * @return void
+     *
+     * @since 1.1
+     */
+    public static function addEntryPointAssets(
+        WebAssetManager $webAssetManager,
+        string $config_name,
+        string $entryPoint
+    ): void {
+        $entryPoints = self::getEntryPoints($config_name);
+
+        if (array_key_exists($entryPoint, $entryPoints)) {
+
+            // Add Styles
+            if (array_key_exists('css', $entryPoints[$entryPoint])) {
+                foreach ($entryPoints[$entryPoint]['css'] as $stylesheet) {
+                    $webAssetManager->registerAndUseStyle('bpprettify-style', JUri::root(true) . $stylesheet);
+                }
+            }
+
+            // Add scripts
+            if (array_key_exists('js', $entryPoints[$entryPoint])) {
+                foreach ($entryPoints[$entryPoint]['js'] as $script) {
+                    $webAssetManager->registerAndUseScript('bpprettify-script', JUri::root(true) . $script, [], [],
+                        ['jquery']);
+                }
+            }
+        }
     }
 
     /**

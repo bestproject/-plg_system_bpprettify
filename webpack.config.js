@@ -1,4 +1,13 @@
+const fs = require('fs');
 const Encore = require('@symfony/webpack-encore');
+
+// Create plugins assets build directory
+fs.mkdir(__dirname + '/media/plg_system_bpprettify/assets', {recursive: true}, (err) => {
+    if (err) throw err;
+});
+fs.mkdir(__dirname + '/media/plg_system_bpprettify/themes', {recursive: true}, (err) => {
+    if (err) throw err;
+});
 
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
@@ -6,8 +15,8 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 // Plugin assets building config.
 Encore
-    .setOutputPath('plugins/system/bpprettify/assets/build')
-    .setPublicPath('plugins/system/bpprettify/assets/build/')
+    .setOutputPath('media/plg_system_bpprettify/assets')
+    .setPublicPath('media/plg_system_bpprettify/assets/')
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSassLoader()
@@ -43,8 +52,8 @@ PluginConfig.name = 'Plugin';
 
 // Themes assets building config.
 Encore
-    .setOutputPath('plugins/system/bpprettify/assets/themes')
-    .setPublicPath('plugins/system/bpprettify/assets/themes/')
+    .setOutputPath('media/plg_system_bpprettify/themes')
+    .setPublicPath('media/plg_system_bpprettify/themes/')
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSassLoader()

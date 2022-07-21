@@ -6,10 +6,12 @@
  * @license     ${license.name}; see ${license.url}
  */
 
+use BPExtensions\Plugin\System\BPPrettify\Helper\AssetsHelper;
 use Joomla\CMS\Document\HtmlDocument;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Plugin\CMSPlugin;
-use Joomla\Plugin\System\BPPrettify\Helper\AssetsHelper;
+use Joomla\CMS\WebAsset\WebAssetManager;
+use Joomla\CMS\WebAsset\WebAssetManagerInterface;
 
 defined('_JEXEC') or die;
 
@@ -30,14 +32,20 @@ class PlgSystemBPPrettify extends CMSPlugin
     protected $app;
 
     /**
-     * Run this method after application dispatch.
+     * Page assets manager.
+     * @var WebAssetManagerInterface
      *
-     * @return bool
+     * @since 2.0
+     */
+    protected $webAssetsManager;
+
+    /**
+     * Run this method after application dispatch.
      *
      * @throws Exception
      * @since 1.0.2
      */
-    public function onAfterDispatch()
+    public function onAfterDispatch(): void
     {
 
         /**
@@ -49,13 +57,13 @@ class PlgSystemBPPrettify extends CMSPlugin
         // Check that we are in the site application.
         if ($this->app->isClient('administrator')) {
 
-            return true;
+            return;
         }
 
-        // Check if the highlighter should be activated in this environment.
+        // Check if the plugin should be activated in this environment.
         if ($doc->getType() !== 'html' || $input->get('tmpl', '',
                 'cmd') === 'component') {
-            return true;
+            return;
         }
 
         // Add border
@@ -64,10 +72,10 @@ class PlgSystemBPPrettify extends CMSPlugin
         // Add prettify script
         HTMLHelper::_('jquery.framework');
 
-        $asset_manager = $doc->getWebAssetManager();
-        $asset_manager->registerAndUseScript('plg_system_bpprettify-theme', AssetsHelper::getPluginScriptUrl());
+        $asset_manager = $this->getWebAssetManager();
+        AssetsHelper::addEntryPointAssets($asset_manager, 'assets', 'plugin');
         $asset_manager->addInlineScript("
-            jQuery(function(){
+            jQuery(function($){
                 $(window).BPPrettify(" . ($line_numbers ? true : '') . ");
             });
         ");
@@ -98,7 +106,34 @@ class PlgSystemBPPrettify extends CMSPlugin
         if ($theme !== '-1') {
             $asset_manager->registerAndUseStyle('plg_system_bpprettify-theme', $style_url, ['version' => 'auto']);
         }
+    }
 
-        return true;
+    /**
+     * Get website assets manager.
+     *
+     * @return WebAssetManager
+     * @since 2.0
+     */
+    protected function getWebAssetManager(): WebAssetManager
+    {
+        if (!($this->webAssetsManager instanceof WebAssetManagerInterface)) {
+            $this->webAssetsManager = $this->app->getDocument()->getWebAssetManager();
+        }
+
+        return $this->webAssetsManager;
+    }
+
+    /**
+     * Return the map of subscribed events and class methods.
+     *
+     * @return array
+     *
+     * @since 2.0
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            'onAfterDispatch' => 'onAfterDispatch',
+        ];
     }
 }

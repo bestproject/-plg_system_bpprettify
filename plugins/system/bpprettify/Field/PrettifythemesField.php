@@ -6,12 +6,12 @@
  * @license     ${license.name}; see ${license.url}
  */
 
-namespace Joomla\Plugin\System\BPPrettify\Field;
+namespace BPExtensions\Plugin\System\BPPrettify\Field;
 
-\defined('JPATH_PLATFORM') or die;
-
+use BPExtensions\Plugin\System\BPPrettify\Helper\AssetsHelper;
 use Joomla\CMS\Form\Field\ListField;
-use Joomla\Plugin\System\BPPrettify\Helper\AssetsHelper;
+
+defined('JPATH_PLATFORM') or die;
 
 /**
  * Shows list of themes fields.
@@ -35,7 +35,7 @@ class PrettifythemesField extends ListField
      *
      * @since   3.7.0
      */
-    protected function getOptions()
+    protected function getOptions(): array
     {
 
         // Collect themes
