@@ -84,7 +84,7 @@ class PlgSystemBPPrettify extends CMSPlugin
         $css = '';
 
         // Add border
-        $padding = $this->params->get('padding', 20);
+        $padding = (int)$this->params->get('padding', 20);
         if ($padding) {
             $css .= "padding:{$padding}px;";
         }
@@ -92,7 +92,7 @@ class PlgSystemBPPrettify extends CMSPlugin
         // Add border
         $border = $this->params->get('border', 1);
         if ($border) {
-            $css .= "box-shadow: inset 0 0 1px rgba(0,0,0,.5);";
+            $css .= "box-shadow: inset 0 0 1px 1px rgba(0,0,0,.2);";
         }
 
         // Set settings CSS

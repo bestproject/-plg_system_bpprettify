@@ -11,6 +11,8 @@
 !/plugins/system/bpprettify/
 !/plugins/system/bpprettify/*
 !/.dev/
+!/test/
+!/test/*
 /media/
 /media/*
 

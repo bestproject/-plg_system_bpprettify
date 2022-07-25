@@ -21,6 +21,7 @@
 
 	<media folder="media" destination="plg_system_bpprettify">
 		<folder>assets</folder>
+		<folder>themes</folder>
 	</media>
 
 	<languages folder="language">

@@ -37,22 +37,45 @@
             </fileset>
             <filterchain>
                 <replacetokens begintoken="${" endtoken="}">
-                    <token key="build.date" value="${build.date}" />
-                    <token key="build.year" value="${build.year}" />
-                    <token key="copyrights" value="${copyrights}" />
-                    <token key="license.name" value="${license.name}" />
-                    <token key="license.url" value="${license.url}" />
+                    <token key="build.date" value="${build.date}"/>
+                    <token key="build.year" value="${build.year}"/>
+                    <token key="copyrights" value="${copyrights}"/>
+                    <token key="license.name" value="${license.name}"/>
+                    <token key="license.url" value="${license.url}"/>
                     <token key="version" value="${build.version}"/>
-                    <token key="package" value="${package}" />
-                    <token key="author.url" value="${author.url}" />
-                    <token key="author.name" value="${author.name}" />
-                    <token key="author.email" value="${author.email}" />
+                    <token key="release" value="${build.release}"/>
+                    <token key="package" value="${package}"/>
+                    <token key="author.url" value="${author.url}"/>
+                    <token key="author.name" value="${author.name}"/>
+                    <token key="author.email" value="${author.email}"/>
                 </replacetokens>
             </filterchain>
         </copy>
 
-        <echo msg="Creating plugin zipfile." />
-        <zip destfile="./.build/plg_system_bpprettify_v${build.version}.zip" basedir="./.build/plg_system_bpprettify"/>
+        <copy todir="./.build/plg_system_bpprettify/media">
+            <fileset dir="./media/plg_system_bpprettify">
+                <include name="**/*"/>
+            </fileset>
+            <filterchain>
+                <replacetokens begintoken="${" endtoken="}">
+                    <token key="build.date" value="${build.date}"/>
+                    <token key="build.year" value="${build.year}"/>
+                    <token key="copyrights" value="${copyrights}"/>
+                    <token key="license.name" value="${license.name}"/>
+                    <token key="license.url" value="${license.url}"/>
+                    <token key="version" value="${build.version}"/>
+                    <token key="release" value="${build.release}"/>
+                    <token key="package" value="${package}"/>
+                    <token key="author.url" value="${author.url}"/>
+                    <token key="author.name" value="${author.name}"/>
+                    <token key="author.email" value="${author.email}"/>
+                </replacetokens>
+            </filterchain>
+        </copy>
+
+        <echo msg="Creating plugin zipfile."/>
+        <zip destfile="./.build/plg_system_bpprettify_v${build.version}_${build.release}.zip"
+             basedir="./.build/plg_system_bpprettify"/>
     </target>
 
     <target name="build">
